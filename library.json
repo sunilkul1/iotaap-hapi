@@ -1,0 +1,22 @@
+{
+  "name": "IoTaaP HAPI",
+  "keywords": "iotaap, connectivity, api, mqtt, cloud",
+  "description": "IoTaaP Hardware API Library",
+  "homepage": "https://www.iotaap.io",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/mvtsolutions/iotaap-hapi.git"
+  },
+  "authors":
+  [
+    {
+      "name": "MVT Solutions",
+      "email": "solutions@mvt-solutions.com",
+      "url": "https://www.mvt-solutions.com",
+      "maintainer": true
+    }
+  ],
+  "version": "0.0.1",
+  "frameworks": "arduino"
+}
