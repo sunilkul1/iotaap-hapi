@@ -47,3 +47,6 @@ extra:
       link: 'https://twitter.com/mvt__solutions'
     - type: 'facebook'
       link: 'https://www.facebook.com/mvtsolutionscompany'
+
+plugins:
+    - mkpdfs
