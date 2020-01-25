@@ -6,7 +6,7 @@ and start trasnfering your data and controlling your device remotely. IoTaaP HAP
 ## HAPI Reference
 
 Our HAPI is object oriented C++ library made to be used with IoTaaP development hardware and PlatformIO ecosystem. HAPI easily integrates
-with 3rd party libraryes and resources in order to give you flexibility in development. 
+with 3rd party libraries and resources in order to give you flexibility in development. 
 
 !!! note "HAPI backward compatibility"
 	HAPI might change in the future and you will be able to use specific library version by configuring it in platformio.ini library. 
