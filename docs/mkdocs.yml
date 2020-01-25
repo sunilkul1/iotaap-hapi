@@ -1,7 +1,7 @@
 # Project information
 site_name: 'IoTaaP HAPI Documentation'
 site_description: 'IoTaaP Hardware API Documentation'
-repo_url: 'https://github.com/iotaap/iotaap-hapi'
+repo_url: 'https://github.com/iotaap/iotaap-hapi/tree/master/docs'
 nav:
   - Home: index.md
   - Device Status: deviceStatus.md
