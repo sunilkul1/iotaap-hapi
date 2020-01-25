@@ -3,7 +3,7 @@
 
 ## Usage
 
-Define used special features before IoTaaP.h and include it in your project. All available special features are listed in SpecialFeatures.h file.
+Include `IoTaaP_HAPI.h` in your project.
 
 ## Usage example
 
@@ -19,9 +19,9 @@ Use official [IoTaaP Hardware modules](https://www.iotaap.io/)
 
 * [IoTaaP Magnolia](https://www.iotaap.io/platform/)
 
-## Instructions
+## Tutorials
 
-Follow [official instructions](https://www.iotaap.io/build/) for even faster IoT development process!
+Follow [official tutorials](https://docs.iotaap.io/iotaap-tutorials/) for even faster IoT development process!
 
 ## Documentation
 
@@ -33,8 +33,8 @@ Join [IoTaaP community](https://community.iotaap.io) today!
 
 ## Authors
 
-* [MVT Solutions](https://www.mvt-solutions.com) – iotaap@mvt-solutions.com
-* IoTaaP community
+* [IoTaaP Team](https://www.iotaap.io) – contact@iotaap.io
+* IoTaaP Community
 
 ## License
 

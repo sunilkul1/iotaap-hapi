@@ -1,6 +1,7 @@
 # Project information
 site_name: 'IoTaaP HAPI Documentation'
 site_description: 'IoTaaP Hardware API Documentation'
+repo_url: 'https://github.com/iotaap/iotaap-hapi'
 nav:
   - Home: index.md
   - Device Status: deviceStatus.md
@@ -8,7 +9,7 @@ nav:
   - Publish: publish.md
         
 # Copyright
-copyright: 'Copyright &copy; 2020 MVT Solutions'
+copyright: 'Copyright IoTaaP'
 
 theme: 
     name: material
@@ -42,11 +43,13 @@ markdown_extensions:
 extra:
   social:
     - type: 'github'
-      link: 'https://github.com/mvtsolutions'
+      link: 'https://github.com/iotaap'
     - type: 'twitter'
-      link: 'https://twitter.com/mvt__solutions'
+      link: 'https://twitter.com/iotaap'
     - type: 'facebook'
-      link: 'https://www.facebook.com/mvtsolutionscompany'
+      link: 'https://www.facebook.com/iotaap'
+    - type: 'youtube'
+      link: 'https://www.youtube.com/channel/UCC9hU3ndh6bh-LbW3YjI98g'
 
 plugins:
     - mkpdfs
