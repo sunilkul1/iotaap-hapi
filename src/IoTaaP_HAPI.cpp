@@ -1,6 +1,12 @@
 #include "IoTaaP_HAPI.h"
 #include "certificate.h"
-#define MQTT_MAX_PACKET_SIZE 4096
+
+/*
+TODO:
+1. OTA Update checking
+2. OTA Update handler
+3. Adding variables in device status payload (JSON)
+*/
 
 /**
  * @brief Construct a new IoTaaP_HAPI:: IoTaaP_HAPI object
@@ -16,6 +22,18 @@ IoTaaP_HAPI::IoTaaP_HAPI(String fwVersion)
     this->_fwVersion = String(fwVersion);
 }
 
+/**
+ * @brief Configure IoTaaP Cloud connection
+ * 
+ * @param deviceID - Device ID from IoTaaP Cloud
+ * @param deviceToken - Device Token from IoTaaP Cloud
+ * @param mqttServer - IoTaaP Cloud MQTT server instance
+ * @param mqttUsername - MQTT Username from IoTaaP Cloud
+ * @param mqttPassword - MQTT Password from IoTaaP Cloud
+ * @param groupID - (optional) Group ID from IoTaaP Cloud
+ * @param groupToken - (optional) Group Token from IoTaaP Cloud
+ * @return int - Returns 0 if successfull
+ */
 int IoTaaP_HAPI::configure(const char *deviceID, const char *deviceToken, const char *mqttServer, const char *mqttUsername, const char *mqttPassword, MQTT_CALLBACK_SIGNATURE, const char *groupID, const char *groupToken)
 {
     this->_deviceID = deviceID;
@@ -31,6 +49,15 @@ int IoTaaP_HAPI::configure(const char *deviceID, const char *deviceToken, const 
     return 0;
 }
 
+/**
+ * @brief Execute MQTT (cloud) connection
+ * 
+ * @param server - MQTT server URL
+ * @param user - MQTT Username
+ * @param password - MQTT Password
+ * @param clientID - Client ID
+ * @return int - Returns 0 if successfull
+ */
 int IoTaaP_HAPI::connectToCloud(const char *server, const char *user, const char *password, MQTT_CALLBACK_SIGNATURE, const char *clientID)
 {
     this->iotaapCore.mqtt.connect(clientID, server, 8883, callback, true, user, password, iotaap_mqtts_certificate);
@@ -38,8 +65,13 @@ int IoTaaP_HAPI::connectToCloud(const char *server, const char *user, const char
     return 0;
 }
 
-DynamicJsonDocument doc(1024);
+DynamicJsonDocument doc(256); // Dynamic JSON doucmnet used for device Status
 
+/**
+ * @brief Publishes device status periodically
+ * 
+ * @return int Returns 0 if successfull
+ */
 int IoTaaP_HAPI::publishStatus()
 {   
 
@@ -69,6 +101,12 @@ int IoTaaP_HAPI::publishStatus()
     return 0;
 }
 
+/**
+ * @brief Publishes payload to the device topic
+ * 
+ * @param payload - Payload (recomended: JSON)
+ * @return int Returns 0 if successfull
+ */
 int IoTaaP_HAPI::devicePublish(const char *payload)
 {
     String topic = "/" + String(this->_mqttUsername) + "/devices/" + String(this->_deviceID) + String(topic);
@@ -80,6 +118,13 @@ int IoTaaP_HAPI::devicePublish(const char *payload)
     return 0;
 }
 
+/**
+ * @brief Pulishes payload to the topic. Root topic (username) will be automatically added
+ * 
+ * @param payload - Payload (recomended: JSON)
+ * @param uTopic - Topic to publish to
+ * @return int - Returns 0 if successfull
+ */
 int IoTaaP_HAPI::publish(const char *payload, const char *uTopic)
 {
     String topic = "/" + String(this->_mqttUsername) + "/" + String(uTopic);
@@ -87,6 +132,38 @@ int IoTaaP_HAPI::publish(const char *payload, const char *uTopic)
     topic.toCharArray(topicChar, sizeof(topicChar));
 
     this->iotaapCore.mqtt.publish(topicChar, payload, false);
+
+    return 0;
+}
+
+/**
+ * @brief Subsribe to a specific topic. Root topic (username) will be added automatically
+ * 
+ * @param uTopic - Topic to subscribe to
+ * @return int Returns 0 if successfull
+ */
+int IoTaaP_HAPI::subscribe(const char *uTopic){
+    String topic = "/" + String(this->_mqttUsername) + String(uTopic);
+    char topicChar[256];
+    topic.toCharArray(topicChar, sizeof(topicChar));
+
+    this->iotaapCore.mqtt.subscribe(topicChar);
+
+    return 0;
+}
+
+/**
+ * @brief Unsubscribe from the specific topic
+ * 
+ * @param uTopic Topic (without root)
+ * @return int Returns 0 if successfull
+ */
+int IoTaaP_HAPI::unsubscribe(const char *uTopic){
+    String topic = "/" + String(this->_mqttUsername) +  String(uTopic);
+    char topicChar[256];
+    topic.toCharArray(topicChar, sizeof(topicChar));
+
+    this->iotaapCore.mqtt.unsubscribe(topicChar);
 
     return 0;
 }
@@ -189,10 +266,3 @@ void IoTaaP_HAPI::callbackInnerFunction(char *topic, byte *message, unsigned int
         }
     }
 }
-
-/*
-TODO:
-1. OTA Update checking
-2. OTA Update handler
-3. Adding variables in device status payload (JSON)
-*/
