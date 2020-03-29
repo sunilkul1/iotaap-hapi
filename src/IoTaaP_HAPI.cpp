@@ -1,5 +1,6 @@
 #include "IoTaaP_HAPI.h"
 #include "certificate.h"
+#include "hapi/src/ota_certificate.h"
 
 /*
 TODO:
@@ -19,6 +20,8 @@ IoTaaP_HAPI::IoTaaP_HAPI(String fwVersion)
     this->_sentMessages = 0;
     this->_receivedMessages = 0;
     this->_disconnects = 0;
+    this->_otaUpdateNow = 0;
+    this->_otaUpdatePrev = 0;
     this->_fwVersion = String(fwVersion);
 }
 
@@ -73,7 +76,7 @@ DynamicJsonDocument doc(256); // Dynamic JSON doucmnet used for device Status
  * @return int Returns 0 if successfull
  */
 int IoTaaP_HAPI::publishStatus()
-{   
+{
 
     // Uptime
     this->_uptime = millis(); // TODO - Implement overflow detection
@@ -142,7 +145,8 @@ int IoTaaP_HAPI::publish(const char *payload, const char *uTopic)
  * @param uTopic - Topic to subscribe to
  * @return int Returns 0 if successfull
  */
-int IoTaaP_HAPI::subscribe(const char *uTopic){
+int IoTaaP_HAPI::subscribe(const char *uTopic)
+{
     String topic = "/" + String(this->_mqttUsername) + String(uTopic);
     char topicChar[256];
     topic.toCharArray(topicChar, sizeof(topicChar));
@@ -158,8 +162,9 @@ int IoTaaP_HAPI::subscribe(const char *uTopic){
  * @param uTopic Topic (without root)
  * @return int Returns 0 if successfull
  */
-int IoTaaP_HAPI::unsubscribe(const char *uTopic){
-    String topic = "/" + String(this->_mqttUsername) +  String(uTopic);
+int IoTaaP_HAPI::unsubscribe(const char *uTopic)
+{
+    String topic = "/" + String(this->_mqttUsername) + String(uTopic);
     char topicChar[256];
     topic.toCharArray(topicChar, sizeof(topicChar));
 
@@ -177,45 +182,53 @@ void IoTaaP_HAPI::apiLoop(bool sendStates)
     this->iotaapCore.mqtt.keepAlive();
     this->publishStatus();
 
-    if(sendStates){
-            DynamicJsonDocument _doc(1024);
+    this->_otaUpdateNow = millis();
+    if ((this->_otaUpdateNow - this->_otaUpdatePrev) > DEVICE_OTA_CHECK_PERIOD)
+    {
+        this->_otaUpdatePrev = this->_otaUpdateNow;
+        this->checkUpdate();
+    }
 
-    _doc["device"] = this->_deviceID;
+    if (sendStates)
+    {
+        DynamicJsonDocument _doc(1024);
 
-    _doc["data"]["onboard"]["but1"] = this->iotaapCore.misc.getBUT1();
-    _doc["data"]["onboard"]["but2"] = this->iotaapCore.misc.getBUT2();
+        _doc["device"] = this->_deviceID;
 
-    _doc["data"]["digital"]["2"] = this->iotaapCore.misc.getPin(2);
-    _doc["data"]["digital"]["4"] = this->iotaapCore.misc.getPin(4);
-    _doc["data"]["digital"]["12"] = this->iotaapCore.misc.getPin(12);
-    _doc["data"]["digital"]["13"] = this->iotaapCore.misc.getPin(13);
-    _doc["data"]["digital"]["14"] = this->iotaapCore.misc.getPin(14);
-    _doc["data"]["digital"]["15"] = this->iotaapCore.misc.getPin(15);
-    _doc["data"]["digital"]["16"] = this->iotaapCore.misc.getPin(16);
-    _doc["data"]["digital"]["17"] = this->iotaapCore.misc.getPin(17);
-    _doc["data"]["digital"]["26"] = this->iotaapCore.misc.getPin(26);
-    _doc["data"]["digital"]["27"] = this->iotaapCore.misc.getPin(27);
-    _doc["data"]["digital"]["32"] = this->iotaapCore.misc.getPin(32);
-    _doc["data"]["digital"]["33"] = this->iotaapCore.misc.getPin(33);
-    _doc["data"]["digital"]["34"] = this->iotaapCore.misc.getPin(34);
-    _doc["data"]["digital"]["35"] = this->iotaapCore.misc.getPin(35);
+        _doc["data"]["onboard"]["but1"] = this->iotaapCore.misc.getBUT1();
+        _doc["data"]["onboard"]["but2"] = this->iotaapCore.misc.getBUT2();
 
-    _doc["data"]["analog"]["16"] = this->iotaapCore.misc.adc.getValue(16);
-    _doc["data"]["analog"]["17"] = this->iotaapCore.misc.adc.getValue(17);
-    _doc["data"]["analog"]["32"] = this->iotaapCore.misc.adc.getValue(32);
-    _doc["data"]["analog"]["33"] = this->iotaapCore.misc.adc.getValue(33);
-    _doc["data"]["analog"]["34"] = this->iotaapCore.misc.adc.getValue(34);
-    _doc["data"]["analog"]["35"] = this->iotaapCore.misc.adc.getValue(35);
+        _doc["data"]["digital"]["2"] = this->iotaapCore.misc.getPin(2);
+        _doc["data"]["digital"]["4"] = this->iotaapCore.misc.getPin(4);
+        _doc["data"]["digital"]["12"] = this->iotaapCore.misc.getPin(12);
+        _doc["data"]["digital"]["13"] = this->iotaapCore.misc.getPin(13);
+        _doc["data"]["digital"]["14"] = this->iotaapCore.misc.getPin(14);
+        _doc["data"]["digital"]["15"] = this->iotaapCore.misc.getPin(15);
+        _doc["data"]["digital"]["16"] = this->iotaapCore.misc.getPin(16);
+        _doc["data"]["digital"]["17"] = this->iotaapCore.misc.getPin(17);
+        _doc["data"]["digital"]["26"] = this->iotaapCore.misc.getPin(26);
+        _doc["data"]["digital"]["27"] = this->iotaapCore.misc.getPin(27);
+        _doc["data"]["digital"]["32"] = this->iotaapCore.misc.getPin(32);
+        _doc["data"]["digital"]["33"] = this->iotaapCore.misc.getPin(33);
+        _doc["data"]["digital"]["34"] = this->iotaapCore.misc.getPin(34);
+        _doc["data"]["digital"]["35"] = this->iotaapCore.misc.getPin(35);
 
-    char payload[1024];
+        _doc["data"]["analog"]["16"] = this->iotaapCore.misc.adc.getValue(16);
+        _doc["data"]["analog"]["17"] = this->iotaapCore.misc.adc.getValue(17);
+        _doc["data"]["analog"]["32"] = this->iotaapCore.misc.adc.getValue(32);
+        _doc["data"]["analog"]["33"] = this->iotaapCore.misc.adc.getValue(33);
+        _doc["data"]["analog"]["34"] = this->iotaapCore.misc.adc.getValue(34);
+        _doc["data"]["analog"]["35"] = this->iotaapCore.misc.adc.getValue(35);
 
-    serializeJson(_doc, payload);
+        char payload[1024];
 
-    String topic = "/" + String(this->_mqttUsername) + "/devices/" + String(this->_deviceID) + "/states";
-    char topicChar[256];
-    topic.toCharArray(topicChar, sizeof(topicChar));
+        serializeJson(_doc, payload);
 
-    this->iotaapCore.mqtt.publish(topicChar, payload, false);
+        String topic = "/" + String(this->_mqttUsername) + "/devices/" + String(this->_deviceID) + "/states";
+        char topicChar[256];
+        topic.toCharArray(topicChar, sizeof(topicChar));
+
+        this->iotaapCore.mqtt.publish(topicChar, payload, false);
     }
 }
 
@@ -265,4 +278,88 @@ void IoTaaP_HAPI::callbackInnerFunction(char *topic, byte *message, unsigned int
             }
         }
     }
+}
+
+/**
+ * @brief Sets internal clock for CA certificate verification
+ * 
+ */
+void IoTaaP_HAPI::setClock()
+{
+    configTime(0, 0, "pool.ntp.org", "time.nist.gov"); // UTC
+
+    time_t now = time(nullptr);
+    while (now < 8 * 3600 * 2)
+    {
+        yield();
+        delay(500);
+        now = time(nullptr);
+    }
+    struct tm timeinfo;
+    gmtime_r(&now, &timeinfo);
+}
+
+/**
+ * @brief Checks if new firmware version is available on the server (periodically)
+ * If new version is different then the current OTA update will be triggered
+ * 
+ */
+void IoTaaP_HAPI::checkUpdate()
+{
+    DynamicJsonDocument versionJson(128);
+    this->_client.setCACert(iotaap_ota_certificate);
+    this->_client.setTimeout(12000 / 1000); // timeout argument is defined in seconds for setTimeout
+    this->_httpClient.begin("https://ota.iotaap.io/v1/ota/device/latest/" + String(this->_deviceID), iotaap_ota_certificate);
+
+    int httpCode = this->_httpClient.GET();
+    Serial.println(httpCode);
+
+    if (httpCode == 200)
+    {
+        String payload = this->_httpClient.getString();
+        deserializeJson(versionJson, payload);
+
+        String version = versionJson["ver"];
+
+        if (version != this->_fwVersion)
+        {
+            this->otaUpdate();
+        }
+        else
+        {
+            this->_httpClient.end();
+            return;
+        }
+    }
+    else
+    {
+        this->_httpClient.end();
+        return;
+    }
+}
+
+/**
+ * @brief Runs OTA Update and restarts MCU if successfull
+ * 
+ */
+void IoTaaP_HAPI::otaUpdate()
+{
+    httpUpdate.setLedPin(ONBOARD_LED1, HIGH);
+    httpUpdate.rebootOnUpdate(true);
+    t_httpUpdate_return ret = httpUpdate.update(this->_client, "https://ota.iotaap.io/v1/ota/device/download/" + String(this->_deviceID) + String(this->_deviceToken));
+
+    /*     switch (ret)
+    {
+    case HTTP_UPDATE_FAILED:
+        Serial.printf("HTTP_UPDATE_FAILED Error (%d): %s\n", httpUpdate.getLastError(), httpUpdate.getLastErrorString().c_str());
+        break;
+
+    case HTTP_UPDATE_NO_UPDATES:
+        Serial.println("HTTP_UPDATE_NO_UPDATES");
+        break;
+
+    case HTTP_UPDATE_OK:
+        Serial.println("HTTP_UPDATE_OK");
+        break;
+    } */
 }

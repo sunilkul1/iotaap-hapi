@@ -10,11 +10,17 @@
 #ifndef __IOTAAP_HAPI_H__
 #define __IOTAAP_HAPI_H__
 
-#define HAPI_VERSION "0.1.0"
+#define HAPI_VERSION "0.1.3"
 #define DEVICE_STATUS_PERIOD 500
+#define DEVICE_OTA_CHECK_PERIOD 2000
 
 #include <Arduino.h>
 #include <IoTaaP.h>
+#include <WiFi.h>
+#include <WiFiMulti.h>
+#include <HTTPClient.h>
+#include <HTTPUpdate.h>
+#include <time.h>
 
 class IoTaaP_HAPI
 {
@@ -32,6 +38,11 @@ private:
     IoTaaP iotaapCore;
     int connectToCloud(const char *server, const char *user, const char *password, MQTT_CALLBACK_SIGNATURE, const char *clientID = '\0');
     int publishStatus();
+    void setClock();
+    void checkUpdate();
+    void otaUpdate();
+    WiFiClientSecure _client;
+    HTTPClient _httpClient;
     const char *_deviceID;
     const char *_deviceToken;
     const char *_mqttServer;
@@ -39,8 +50,9 @@ private:
     const char *_mqttPassword;
     const char *_groupID;
     const char *_groupToken;
-
     unsigned long int _uptime;
+    unsigned long int _otaUpdateNow; // Detect passed time between update check
+    unsigned long int _otaUpdatePrev; // Detect passed time between update check
     String _fwVersion;
     unsigned long int _sentMessages;
     unsigned long int _receivedMessages;
