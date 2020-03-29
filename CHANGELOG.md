@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.1.3] - 2020-03-30
+ 
+### Added
+ 
+### Changed
+
+Updated IoTaaP Core version dependency
+   
+### Fixed
+
+Fixed buggy fw version variable
+Fixed device publish function with missing topic
+
 ## [0.1.3] - 2020-03-30
  
 ### Added
