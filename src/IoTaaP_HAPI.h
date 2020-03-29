@@ -27,7 +27,7 @@ class IoTaaP_HAPI
 public:
     IoTaaP_HAPI(String fwVersion);
     int configure(const char *deviceID, const char *deviceToken, const char *mqttServer, const char *mqttUsername, const char *mqttPassword, MQTT_CALLBACK_SIGNATURE, const char *groupID = '\0', const char *groupToken = '\0');
-    int devicePublish(const char *payload);
+    int devicePublish(const char *payload, const char *uTopic);
     int publish(const char *payload, const char *topic);
     int subscribe(const char *topic);
     int unsubscribe(const char *topic);

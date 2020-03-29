@@ -4,9 +4,7 @@
 
 /*
 TODO:
-1. OTA Update checking
-2. OTA Update handler
-3. Adding variables in device status payload (JSON)
+1. Adding variables in device status payload (JSON)
 */
 
 /**
@@ -108,11 +106,12 @@ int IoTaaP_HAPI::publishStatus()
  * @brief Publishes payload to the device topic
  * 
  * @param payload - Payload (recomended: JSON)
+ * @param uTopic - Topic to publish to
  * @return int Returns 0 if successfull
  */
-int IoTaaP_HAPI::devicePublish(const char *payload)
+int IoTaaP_HAPI::devicePublish(const char *payload, const char *uTopic)
 {
-    String topic = "/" + String(this->_mqttUsername) + "/devices/" + String(this->_deviceID) + String(topic);
+    String topic = "/" + String(this->_mqttUsername) + "/devices/" + String(this->_deviceID) + "/" + String(uTopic);
     char topicChar[256];
     topic.toCharArray(topicChar, sizeof(topicChar));
 
