@@ -11,7 +11,7 @@ TODO:
  * @brief Construct a new IoTaaP_HAPI:: IoTaaP_HAPI object
  * 
  */
-IoTaaP_HAPI::IoTaaP_HAPI(String fwVersion)
+IoTaaP_HAPI::IoTaaP_HAPI(const char *fwVersion)
 {
     this->_uptime = 0;
     this->_uptimePrev = 0;
@@ -20,7 +20,7 @@ IoTaaP_HAPI::IoTaaP_HAPI(String fwVersion)
     this->_disconnects = 0;
     this->_otaUpdateNow = 0;
     this->_otaUpdatePrev = 0;
-    this->_fwVersion = String(fwVersion);
+    this->_fwVersion = fwVersion;
 }
 
 /**
