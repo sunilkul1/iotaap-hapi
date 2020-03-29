@@ -12,7 +12,7 @@
 
 #define HAPI_VERSION "0.1.3"
 #define DEVICE_STATUS_PERIOD 500
-#define DEVICE_OTA_CHECK_PERIOD 2000
+#define DEVICE_OTA_CHECK_PERIOD 30000
 
 #include <Arduino.h>
 #include <IoTaaP.h>
