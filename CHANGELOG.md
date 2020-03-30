@@ -1,5 +1,30 @@
 # Change Log
 
+## [1.1.3] - 2020-03-30
+ 
+### Added
+
+Added detection if device is standalone or in a group
+ 
+### Changed
+
+Updated IoTaaP Core version dependency
+   
+### Fixed
+
+Fixed buggy fw version variable
+Fixed device publish function with missing topic
+
+## [0.1.3] - 2020-03-30
+ 
+### Added
+
+OTA Upgrade
+ 
+### Changed
+   
+### Fixed
+
 ## [0.1.0] - 2020-03-08
  
 ### Added

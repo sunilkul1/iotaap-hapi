@@ -1,0 +1,36 @@
+/*
+ * IoTaaP Cloud OTA Certificate
+ * 
+ * IoTaaP Team <contact@iotaap.io>
+ * https://www.iotaap.io
+ * 
+ */
+
+#ifndef __IOTAAP_OTA_CERTIFICATE_H__
+#define __IOTAAP_OTA_CERTIFICATE_H__
+
+const char *iotaap_ota_certificate =
+    "-----BEGIN CERTIFICATE-----\n"
+    "MIIDkzCCAnugAwIBAgIUT54T4n3afmx9ROZ7xK9BDrrYGpEwDQYJKoZIhvcNAQEL\n"
+    "BQAwWTELMAkGA1UEBhMCSFIxEDAOBgNVBAgMB0Nyb2F0aWExDzANBgNVBAcMBlph\n"
+    "Z3JlYjEPMA0GA1UECgwGSW9UYWFQMRYwFAYDVQQDDA1vdGEuaW90YWFwLmlvMB4X\n"
+    "DTIwMDMyOTIwMjIzOFoXDTI1MDMyODIwMjIzOFowWTELMAkGA1UEBhMCSFIxEDAO\n"
+    "BgNVBAgMB0Nyb2F0aWExDzANBgNVBAcMBlphZ3JlYjEPMA0GA1UECgwGSW9UYWFQ\n"
+    "MRYwFAYDVQQDDA1vdGEuaW90YWFwLmlvMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A\n"
+    "MIIBCgKCAQEAwm0KwxoB5Zf1ut/zaRbs+iOZWGulzxRaK1f4d9Wc0JjCCSVdF1Yq\n"
+    "PwwF5mcU/t96n4u9QolBPPff3RV6DlqChpTTMTq3KhzlIB5R3ApTqvkI3vZDgT+L\n"
+    "zAekk9TqIrHmC/0QD5iZ19mH/ntuqi5OKZFGF5hLLu0SRMDr399FUg/cXeKULPq8\n"
+    "WH6RZXqCxuNallpNCD7OPXHhX1p203mtC+ez4NuA0sttlWFyAVBgAajQpzuS6Gsc\n"
+    "Ekkpz+Ak9hdBh7V2ChStBDrvrD88nGeGN0BNheJbMs9M6e/YeRLPP76XEt4PXkzR\n"
+    "dhLh+bNq81YSp5TIQ9mLgEXi2lLJFqD/LwIDAQABo1MwUTAdBgNVHQ4EFgQU4anz\n"
+    "Ah55E69GX++H7xrf4AFbXyswHwYDVR0jBBgwFoAU4anzAh55E69GX++H7xrf4AFb\n"
+    "XyswDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAqb5G1jZK7EMk\n"
+    "k4IypM26+dFVLO5ufEMflX8Y+T2OrsNyoLBnEfKi8py/GxwIsZ5wqxEYiIpOFHaW\n"
+    "iBI8HaNb1fiAogGF28Wzrqioh/xPBmZt2iNmevU2WEQE2Keqn6N6d6wabQ1Kz2BN\n"
+    "bDOkhUmmJ9kBTXF//LfAdMgMuRmaX8TGGSH15YXcqHO7giNM+pBhDN/5Qie+texe\n"
+    "z8u94XuEpRfiWtHL32xksJdFtPgPF02T8lYny0F4Bb2wjTSqULt08Z+v3kwH4chx\n"
+    "ZkmIutc0bDhNQyZo+bzN1AaIAQsnPUNzQ2eIFpmnsA9xdBGWTkSxX/f+/jWB7epY\n"
+    "sUSLgu3ThA==\n"
+    "-----END CERTIFICATE-----\n";
+
+#endif
