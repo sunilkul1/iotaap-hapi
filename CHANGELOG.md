@@ -3,6 +3,8 @@
 ## [1.1.3] - 2020-03-30
  
 ### Added
+
+Added detection if device is standalone or in a group
  
 ### Changed
 

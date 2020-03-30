@@ -308,7 +308,14 @@ void IoTaaP_HAPI::checkUpdate()
     DynamicJsonDocument versionJson(128);
     this->_client.setCACert(iotaap_ota_certificate);
     this->_client.setTimeout(12000 / 1000); // timeout argument is defined in seconds for setTimeout
-    this->_httpClient.begin("https://ota.iotaap.io/v1/ota/device/latest/" + String(this->_deviceID), iotaap_ota_certificate);
+    if (this->_groupID == '\0')
+    { // Checking either this device is part of a gorup or standalone
+        this->_httpClient.begin("https://ota.iotaap.io/v1/ota/device/latest/" + String(this->_deviceID), iotaap_ota_certificate);
+    }
+    else
+    {
+        this->_httpClient.begin("https://ota.iotaap.io/v1/ota/group/latest/" + String(this->_groupID), iotaap_ota_certificate);
+    }
 
     int httpCode = this->_httpClient.GET();
     Serial.println(httpCode);
@@ -345,7 +352,14 @@ void IoTaaP_HAPI::otaUpdate()
 {
     httpUpdate.setLedPin(ONBOARD_LED1, HIGH);
     httpUpdate.rebootOnUpdate(true);
-    t_httpUpdate_return ret = httpUpdate.update(this->_client, "https://ota.iotaap.io/v1/ota/device/download/" + String(this->_deviceID) + String(this->_deviceToken));
+    if (this->_groupID == '\0')
+    {
+        t_httpUpdate_return ret = httpUpdate.update(this->_client, "https://ota.iotaap.io/v1/ota/device/download/" + String(this->_deviceID) + String(this->_deviceToken));
+    }
+    else
+    {
+        t_httpUpdate_return ret = httpUpdate.update(this->_client, "https://ota.iotaap.io/v1/ota/group/download/" + String(this->_groupID) + String(this->_groupToken));
+    }
 
     /*     switch (ret)
     {
