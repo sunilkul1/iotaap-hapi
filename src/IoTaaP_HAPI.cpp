@@ -318,7 +318,6 @@ void IoTaaP_HAPI::checkUpdate()
     }
 
     int httpCode = this->_httpClient.GET();
-    Serial.println(httpCode);
 
     if (httpCode == 200)
     {
