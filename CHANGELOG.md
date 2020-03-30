@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.1.4] - 2020-03-30
+ 
+### Added
+
+Added travis testing and basic example
+ 
+### Changed
+
+Updated IoTaaP Core version dependency
+   
+### Fixed
+
+Fixed wrong certificate path
+
 ## [1.1.3] - 2020-03-30
  
 ### Added

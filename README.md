@@ -1,6 +1,8 @@
 # IoTaaP HAPI - Hardware API Library
 > Hardware to Cloud Application Programming Interface
 
+[![Build Status](https://travis-ci.org/iotaap/iotaap-hapi.svg?branch=master)](https://travis-ci.org/iotaap/iotaap-core)
+
 ## Usage
 
 Include `IoTaaP_HAPI.h` in your project.
