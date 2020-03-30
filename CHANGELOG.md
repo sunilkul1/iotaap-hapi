@@ -3,6 +3,8 @@
 ## [1.1.4] - 2020-03-30
  
 ### Added
+
+Added travis testing and basic example
  
 ### Changed
 
