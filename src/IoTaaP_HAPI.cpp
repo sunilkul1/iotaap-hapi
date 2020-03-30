@@ -1,6 +1,6 @@
 #include "IoTaaP_HAPI.h"
 #include "certificate.h"
-#include "hapi/src/ota_certificate.h"
+#include "ota_certificate.h"
 
 /*
 TODO:
