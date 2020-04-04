@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.1.5] - 2020-04-04
+ 
+### Added
+
+Added functions to enable or disable updates
+ 
+### Changed
+
+Made checkUpdate() public
+   
+### Fixed
+
 ## [1.1.4] - 2020-03-30
  
 ### Added

@@ -21,6 +21,7 @@ IoTaaP_HAPI::IoTaaP_HAPI(const char *fwVersion)
     this->_otaUpdateNow = 0;
     this->_otaUpdatePrev = 0;
     this->_fwVersion = fwVersion;
+    this->_updatesEnabled = true;
 }
 
 /**
@@ -173,6 +174,22 @@ int IoTaaP_HAPI::unsubscribe(const char *uTopic)
 }
 
 /**
+ * @brief Enables automatic updates (enabled by default)
+ * 
+ */
+void IoTaaP_HAPI::enableUpdates(){
+    this->_updatesEnabled = true;
+}
+
+/**
+ * @brief Disables automatic updates (enabled by default)
+ * 
+ */
+void IoTaaP_HAPI::disableUpdates(){
+    this->_updatesEnabled = false;
+}
+
+/**
  * @brief API function that will publish IoTaaP input states to the topic 'api/transfer'. Almost non-blocking.
  * 
  */
@@ -182,7 +199,7 @@ void IoTaaP_HAPI::apiLoop(bool sendStates)
     this->publishStatus();
 
     this->_otaUpdateNow = millis();
-    if ((this->_otaUpdateNow - this->_otaUpdatePrev) > DEVICE_OTA_CHECK_PERIOD)
+    if (((this->_otaUpdateNow - this->_otaUpdatePrev) > DEVICE_OTA_CHECK_PERIOD) && this->_updatesEnabled)
     {
         this->_otaUpdatePrev = this->_otaUpdateNow;
         this->checkUpdate();
@@ -299,8 +316,9 @@ void IoTaaP_HAPI::setClock()
 }
 
 /**
- * @brief Checks if new firmware version is available on the server (periodically)
- * If new version is different then the current OTA update will be triggered
+ * @brief Checks if new firmware version is available on the server
+ * If new version is different then the current OTA update will be triggered. Function is called
+ * periodically if updates are enabled.
  * 
  */
 void IoTaaP_HAPI::checkUpdate()

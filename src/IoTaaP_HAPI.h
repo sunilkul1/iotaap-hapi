@@ -10,7 +10,7 @@
 #ifndef __IOTAAP_HAPI_H__
 #define __IOTAAP_HAPI_H__
 
-#define HAPI_VERSION "1.1.4"
+#define HAPI_VERSION "1.1.5"
 #define DEVICE_STATUS_PERIOD 500
 #define DEVICE_OTA_CHECK_PERIOD 30000
 
@@ -33,16 +33,19 @@ public:
     int unsubscribe(const char *topic);
     void apiLoop(bool sendStates = false);
     void callbackInnerFunction(char *topic, byte *message, unsigned int length);
+    void enableUpdates();
+    void disableUpdates();
+    void checkUpdate();
 
 private:
     IoTaaP iotaapCore;
     int connectToCloud(const char *server, const char *user, const char *password, MQTT_CALLBACK_SIGNATURE, const char *clientID = '\0');
     int publishStatus();
     void setClock();
-    void checkUpdate();
     void otaUpdate();
     WiFiClientSecure _client;
     HTTPClient _httpClient;
+    bool _updatesEnabled;
     const char *_deviceID;
     const char *_deviceToken;
     const char *_mqttServer;
