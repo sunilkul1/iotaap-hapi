@@ -1,7 +1,7 @@
 # IoTaaP HAPI - Hardware API Library
 > Hardware to Cloud Application Programming Interface
 
-[![Build Status](https://travis-ci.org/iotaap/iotaap-hapi.svg?branch=master)](https://travis-ci.org/iotaap/iotaap-core)
+[![Build Status](https://jenkins.iotaap.io/buildStatus/icon?job=iotaap-hapi%2Fmaster)](https://jenkins.iotaap.io/job/iotaap-hapi/job/master/)
 
 ## Usage
 
@@ -39,5 +39,4 @@ Join [IoTaaP community](https://community.iotaap.io) today!
 * IoTaaP Community
 
 ## License
-
-Distributed under the GNU General Public License. See ``LICENSE`` for more information.
+By contributing, you agree that your contributions will be licensed under Apache License 2.0, see [LICENSE](./LICENSE.md).
