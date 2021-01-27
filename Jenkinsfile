@@ -10,7 +10,7 @@ python3 -m platformio lib -g install ./'''
       }
     }
 
-    stage('') {
+    stage('Build examples') {
       steps {
         sh 'python3 -m platformio ci --lib="." --board="esp32dev" ./examples/HAPI-Basic'
       }
