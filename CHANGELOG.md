@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.1.6] - 2021-01-27
+ 
+### Added
+
+### Changed
+
+License
+   
+### Fixed
+
+Temporary fix in example for: https://community.platformio.org/t/adafruit-gfx-lib-will-not-build-any-more-pio-5/15776
+
 ## [1.1.5] - 2020-04-04
  
 ### Added
