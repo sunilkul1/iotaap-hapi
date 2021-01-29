@@ -1,15 +1,15 @@
 /*
- * IoTaaP Cloud OTA Certificate
+ * IoTaaP Cloud OTA Certificate - OLD
  * 
  * IoTaaP Team <contact@iotaap.io>
  * https://www.iotaap.io
  * 
  */
 
-#ifndef __IOTAAP_OTA_CERTIFICATE_H__
-#define __IOTAAP_OTA_CERTIFICATE_H__
+#ifndef __IOTAAP_OTA_CERTIFICATE_OLD_H__
+#define __IOTAAP_OTA_CERTIFICATE_OLD_H__
 
-const char *iotaap_ota_certificate =
+const char *iotaap_ota_certificate_old =
     "-----BEGIN CERTIFICATE-----\n"
     "MIIDkzCCAnugAwIBAgIUT54T4n3afmx9ROZ7xK9BDrrYGpEwDQYJKoZIhvcNAQEL\n"
     "BQAwWTELMAkGA1UEBhMCSFIxEDAOBgNVBAgMB0Nyb2F0aWExDzANBgNVBAcMBlph\n"

@@ -1,5 +1,26 @@
 # Change Log
 
+## [1.1.7] - 2021-01-29
+ 
+### Added
+
+### Changed
+
+**!!!Breaking changes!!!**
+
+New certificate is added to the project and implemented directly to the library. Now the same Root CA certificate can be 
+used both for MQTTS and OTA Updates. 
+
+In order to use previous version of IoTaaP HAPI Library you can select it using platformio.ini file by adding:
+> lib_deps=
+    iotaap/IoTaaP HAPI @ 1.1.6
+
+Please be aware that this library is deprecated and we have introduced IoTaaP OS from 2021-01-29, and for any new project
+we recommend using IoTaaP OS, although IoTaaP HAPI will still be available.
+[**IoTaaP OS is on GitHub**](https://github.com/iotaap/iotaap-os)
+   
+### Fixed
+
 ## [1.1.6] - 2021-01-27
  
 ### Added

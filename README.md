@@ -3,6 +3,12 @@
 
 [![Build Status](https://jenkins.iotaap.io/buildStatus/icon?job=iotaap-hapi%2Fmaster)](https://jenkins.iotaap.io/job/iotaap-hapi/job/master/)
 
+ ## Switching to IoTaaP OS
+
+Please be aware that this library is deprecated and we have introduced IoTaaP OS from 2021-01-29, and for any new project
+we recommend using IoTaaP OS, although IoTaaP HAPI will still be available.
+[**IoTaaP OS is on GitHub**](https://github.com/iotaap/iotaap-os)
+
 ## Usage
 
 Include `IoTaaP_HAPI.h` in your project.
