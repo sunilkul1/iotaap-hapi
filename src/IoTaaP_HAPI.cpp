@@ -1,11 +1,5 @@
 #include "IoTaaP_HAPI.h"
-#include "certificate.h"
-#include "ota_certificate.h"
-
-/*
-TODO:
-1. Adding variables in device status payload (JSON)
-*/
+#include "certificate_new.h"
 
 /**
  * @brief Construct a new IoTaaP_HAPI:: IoTaaP_HAPI object
@@ -62,7 +56,7 @@ int IoTaaP_HAPI::configure(const char *deviceID, const char *deviceToken, const 
  */
 int IoTaaP_HAPI::connectToCloud(const char *server, const char *user, const char *password, MQTT_CALLBACK_SIGNATURE, const char *clientID)
 {
-    this->iotaapCore.mqtt.connect(clientID, server, 8883, callback, true, user, password, iotaap_mqtts_certificate);
+    this->iotaapCore.mqtt.connect(clientID, server, 8883, callback, true, user, password, iotaap_certificate);
 
     return 0;
 }
@@ -324,15 +318,15 @@ void IoTaaP_HAPI::setClock()
 void IoTaaP_HAPI::checkUpdate()
 {
     DynamicJsonDocument versionJson(128);
-    this->_client.setCACert(iotaap_ota_certificate);
+    this->_client.setCACert(iotaap_certificate);
     this->_client.setTimeout(12000 / 1000); // timeout argument is defined in seconds for setTimeout
     if (this->_groupID == '\0')
     { // Checking either this device is part of a gorup or standalone
-        this->_httpClient.begin("https://ota.iotaap.io/v1/ota/device/latest/" + String(this->_deviceID), iotaap_ota_certificate);
+        this->_httpClient.begin("https://ota.iotaap.io/v1/ota/device/latest/" + String(this->_deviceID), iotaap_certificate);
     }
     else
     {
-        this->_httpClient.begin("https://ota.iotaap.io/v1/ota/group/latest/" + String(this->_groupID), iotaap_ota_certificate);
+        this->_httpClient.begin("https://ota.iotaap.io/v1/ota/group/latest/" + String(this->_groupID), iotaap_certificate);
     }
 
     int httpCode = this->_httpClient.GET();
