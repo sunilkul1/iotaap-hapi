@@ -1,8 +1,8 @@
 {
-  "name": "IoTaaP HAPI",
+  "name": "IoTaaP HAPI - DEPRECATED",
   "keywords": "iotaap, connectivity, api, mqtt, cloud, iot",
-  "description": "IoTaaP Cloud Hardware API Library",
-  "homepage": "https://www.iotaap.io",
+  "description": "Use IoTaaP OS instead",
+  "homepage": "https://www.iotaap.io/iotaap-os",
   "repository":
   {
     "type": "git",
